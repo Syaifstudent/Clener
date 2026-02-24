@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Ad Cleaner Pro</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.card {
+  background: #020617;
+  border-radius: 14px;
+  width: 380px;
+  padding: 26px;
+  box-shadow: 0 0 35px rgba(0,255,150,0.25);
+  text-align: center;
+}
+
+.icon { font-size: 48px; }
+h1 { font-size: 20px; margin: 6px 0 10px; }
+
+.status {
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #22c55e;
+}
+
+.loading {
+  display: none;
+  color: #38bdf8;
+  margin-bottom: 8px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.3; }
+}
+
+.log {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 12px;
+  height: 130px;
+  overflow-y: auto;
+  font-size: 13px;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.log div { margin-bottom: 6px; color: #a7f3d0; }
+
+button {
+  background: #22c55e;
+  color: #022c22;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+button:disabled {
+  background: #166534;
+  cursor: not-allowed;
+}
+
+.cleaning {
+  display: none;
+  margin-top: 14px;
+}
+
+.broom {
+  font-size: 42px;
+  animation: sweep 0.8s infinite alternate;
+}
+
+@keyframes sweep {
+  from { transform: translateX(-45px) rotate(-20deg); }
+  to   { transform: translateX(45px) rotate(20deg); }
+}
+
+/* FINAL CLEAN SCREEN */
+.final {
+  display: none;
+}
+
+.check {
+  font-size: 64px;
+  color: #22c55e;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.footer {
+  margin-top: 10px;
+  font-size: 11px;
+  color: #64748b;
+}
+</style>
+</head>
+
+<body>
+<div class="card" id="app">
+
+  <!-- MAIN UI -->
+  <div id="mainUI">
+    <div class="icon">🛡️</div>
+    <h1>Ad Cleaner Pro</h1>
+    <div class="status" id="status">✔ Proteksi Aktif</div>
+
+    <div class="loading" id="loading">🔍 Memindai sistem...</div>
+
+    <div class="log" id="log">
+      <div>• Sistem siap digunakan</div>
+    </div>
+
+    <button id="scanBtn">Pindai & Bersihkan</button>
+    <button id="cleanBtn" style="display:none;">🧹 Bersihkan Iklan</button>
+
+    <div class="cleaning" id="cleaning">
+      <div class="broom">🧹</div>
+      <div style="margin-top:6px;color:#38bdf8;">Membersihkan iklan...</div>
+    </div>
+
+    <div class="footer">Versi 1.0 • Perlindungan Real-Time</div>
+  </div>
+
+  <!-- FINAL SCREEN -->
+  <div class="final" id="finalUI">
+    <div class="check">✅</div>
+    <h2>Sistem Bersih</h2>
+    <p style="color:#94a3b8;font-size:14px;">
+      Semua iklan & tracker berhasil dibersihkan
+    </p>
+    <button onclick="location.reload()">DONE</button>
+  </div>
+
+</div>
+
+<script>
+const logs = [
+  "Iklan pop-up terdeteksi",
+  "Tracker pihak ketiga ditemukan",
+  "Script iklan dianalisis",
+  "Banner iklan terhapus",
+  "Cookie iklan dibersihkan",
+  "Redirect iklan dicegah"
+];
+
+const logBox = document.getElementById("log");
+const scanBtn = document.getElementById("scanBtn");
+const cleanBtn = document.getElementById("cleanBtn");
+const loading = document.getElementById("loading");
+const status = document.getElementById("status");
+const cleaning = document.getElementById("cleaning");
+const mainUI = document.getElementById("mainUI");
+const finalUI = document.getElementById("finalUI");
+
+scanBtn.onclick = () => {
+  scanBtn.disabled = true;
+  logBox.innerHTML = "";
+  loading.style.display = "block";
+  status.textContent = "⏳ Memindai...";
+  status.style.color = "#38bdf8";
+
+  let i = 0;
+  const scan = setInterval(() => {
+    logBox.innerHTML += `<div>✔ ${logs[i]}</div>`;
+    logBox.scrollTop = logBox.scrollHeight;
+    i++;
+
+    if (i >= logs.length) {
+      clearInterval(scan);
+      loading.style.display = "none";
+      status.textContent = "✔ Siap dibersihkan";
+      status.style.color = "#22c55e";
+      cleanBtn.style.display = "block";
+      scanBtn.disabled = false;
+    }
+  }, 600);
+};
+
+cleanBtn.onclick = () => {
+  cleanBtn.disabled = true;
+  cleaning.style.display = "block";
+  status.textContent = "🧹 Membersihkan iklan...";
+
+  setTimeout(() => {
+    mainUI.style.display = "none";
+    finalUI.style.display = "block";
+  }, 2800);
+};
+</script>
+</body>
+</html>
