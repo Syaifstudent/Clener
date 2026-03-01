@@ -2,135 +2,54 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ad Cleaner Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phone Cleaner</title>
 
 <style>
 *{box-sizing:border-box}
 body{
-  font-family:"Segoe UI",Arial,sans-serif;
-  background:radial-gradient(circle at top,#020617,#020617 40%,#000);
-  color:#e5e7eb;
   margin:0;
-  min-height:100vh;
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(180deg,#020617,#000);
+  color:#e5e7eb;
 }
 .app{
-  width:100%;
-  height:100vh;
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 .card{
-  width:min(92vw,420px);
+  width:min(94vw,420px);
   background:#020617;
-  border-radius:18px;
-  padding:30px;
-  text-align:center;
-  box-shadow:0 0 30px rgba(34,197,94,.35);
-}
-.icon{
-  font-size:52px;
-  filter:drop-shadow(0 0 12px rgba(34,197,94,.7));
-}
-h1{font-size:22px;margin:10px 0 6px}
-.status{font-weight:bold;color:#22c55e;margin-bottom:14px}
-
-/* ===== REALISTIC PHONE ===== */
-.scanBox{
-  display:none;
-  position:relative;
-  width:150px;
-  height:260px;
-  margin:18px auto;
-}
-.phone{
-  width:100%;
-  height:100%;
-  background:linear-gradient(#020617,#020617);
   border-radius:22px;
+  padding:26px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(34,197,94,.35);
+}
+
+/* PHONE */
+.phone{
+  width:180px;
+  height:310px;
+  margin:16px auto;
+  border-radius:26px;
   border:3px solid #22c55e;
-  position:relative;
   box-shadow:0 0 25px rgba(34,197,94,.6);
 }
-.phone::before{
-  content:"";
-  position:absolute;
-  top:6px;
-  left:50%;
-  transform:translateX(-50%);
-  width:40px;
-  height:6px;
-  border-radius:3px;
-  background:#1e293b;
-}
 .screen{
-  position:absolute;
-  inset:18px 8px;
-  background:radial-gradient(circle at top,#020617,#000);
-  border-radius:14px;
-  overflow:hidden;
-}
-
-/* VIRUS DOT */
-.virus{
-  position:absolute;
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#ef4444;
-  box-shadow:0 0 12px #ef4444;
-  animation:blink 1s infinite;
-}
-@keyframes blink{
-  50%{opacity:.3}
-}
-
-/* MAGNIFIER */
-.magnifier{
-  position:absolute;
-  font-size:42px;
-  animation:scanMove 2.5s linear infinite;
-  z-index:5;
-}
-@keyframes scanMove{
-  0%{top:20px;left:10px}
-  25%{top:40px;left:80px}
-  50%{top:140px;left:40px}
-  75%{top:190px;left:90px}
-  100%{top:20px;left:10px}
-}
-
-/* VIRUS ALERT */
-.alert{
-  position:absolute;
-  bottom:10px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:11px;
-  color:#f87171;
-  opacity:0;
-  animation:alertPop 2.5s infinite;
-}
-@keyframes alertPop{
-  20%{opacity:1}
-  50%{opacity:0}
-}
-
-/* ===== LOG ===== */
-.log{
-  background:rgba(2,6,23,.6);
-  border:1px solid #1e293b;
-  border-radius:12px;
-  padding:14px;
-  height:140px;
+  height:100%;
+  padding:12px;
   overflow-y:auto;
-  font-size:14px;
+  font-size:12px;
   text-align:left;
-  margin-bottom:14px;
+}
+.screen::-webkit-scrollbar{width:5px}
+.screen::-webkit-scrollbar-thumb{
+  background:#22c55e;border-radius:10px
 }
 .log div{
-  margin-bottom:8px;
+  margin-bottom:6px;
   color:#a7f3d0;
   animation:fade .3s ease;
 }
@@ -138,153 +57,149 @@ h1{font-size:22px;margin:10px 0 6px}
   from{opacity:0;transform:translateY(4px)}
   to{opacity:1}
 }
+.removed{
+  animation:remove .6s forwards;
+}
+@keyframes remove{
+  to{opacity:0;transform:translateX(40px)}
+}
 
 /* BUTTON */
 button{
   width:100%;
-  padding:15px;
-  border-radius:12px;
+  padding:14px;
   border:none;
+  border-radius:14px;
   font-size:16px;
   font-weight:bold;
-  cursor:pointer;
   background:linear-gradient(135deg,#22c55e,#4ade80);
   color:#022c22;
-  margin-top:10px;
-}
-button:disabled{opacity:.5}
-
-/* CLEAN */
-.cleaning{display:none;margin-top:16px}
-.broom{
-  font-size:46px;
-  animation:sweep .7s infinite alternate;
-}
-@keyframes sweep{
-  from{transform:translateX(-50px) rotate(-25deg)}
-  to{transform:translateX(50px) rotate(25deg)}
-}
-.percent{
-  margin-top:8px;
-  font-size:24px;
-  font-weight:bold;
-  color:#22c55e;
+  cursor:pointer;
 }
 
-/* FINAL */
-.final{display:none;text-align:center}
+/* FINAL FULL SCREEN */
+.finalScreen{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,#020617,#000);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:999;
+}
 .check{
-  font-size:80px;
+  font-size:110px;
   color:#22c55e;
-  filter:drop-shadow(0 0 18px rgba(34,197,94,.9));
+  filter:drop-shadow(0 0 24px rgba(34,197,94,.9));
+  animation:pop .6s ease;
 }
-.footer{margin-top:14px;font-size:12px;color:#64748b}
+@keyframes pop{
+  from{opacity:0;transform:scale(.6)}
+  to{opacity:1}
+}
+.doneBtn{
+  margin-top:24px;
+  width:200px;
+}
 </style>
 </head>
 
 <body>
+
 <div class="app">
-<div class="card">
+<div class="card" id="mainUI">
 
-<div id="mainUI">
-  <div class="icon">🛡️</div>
-  <h1>Ad Cleaner Pro</h1>
-  <div class="status" id="status">✔ Siap dipindai</div>
+<h2>Phone Cleaner</h2>
 
-  <div class="scanBox" id="scanBox">
-    <div class="phone">
-      <div class="screen">
-        <div class="virus" style="top:40px;left:30px"></div>
-        <div class="virus" style="top:120px;left:70px"></div>
-        <div class="virus" style="top:170px;left:40px"></div>
-        <div class="alert">⚠ Adds detected</div>
-      </div>
-    </div>
-    <div class="magnifier">🔍</div>
-  </div>
-
-  <div class="log" id="log"></div>
-
-  <button id="scanBtn">Pindai & Bersihkan</button>
-  <button id="cleanBtn" style="display:none">🧹 Bersihkan Iklan</button>
-
-  <div class="cleaning" id="cleaning">
-    <div class="broom">🧹</div>
-    <div id="cleanText" style="color:#38bdf8">Membersihkan iklan...</div>
-    <div class="percent" id="percent">0%</div>
-  </div>
-
-  <div class="footer">Versi 8.0 • Perlindungan Real-Time</div>
+<div class="phone">
+  <div class="screen log" id="log"></div>
 </div>
 
-<div class="final" id="finalUI">
+<button id="scanBtn">SCAN</button>
+<button id="cleanBtn" style="display:none">CLEANER</button>
+
+</div>
+</div>
+
+<!-- FINAL SCREEN (SATU LAYAR) -->
+<div class="finalScreen" id="finalScreen">
   <div class="check">✅</div>
-  <h2>Sistem Bersih</h2>
-  <p style="color:#94a3b8">Semua iklan & tracker berhasil dibersihkan</p>
-  <button onclick="location.reload()">DONE</button>
-</div>
-
-</div>
+  <button class="doneBtn" onclick="location.reload()">DONE</button>
 </div>
 
 <script>
-const scanLogs=[
- "✔ Memindai sistem...",
- "⚠ Aplikasi terdeteksi",
- "✔ Tracker pihak ketiga ditemukan",
- "✔ Script iklan dianalisis",
- "✔ Cookie iklan teridentifikasi",
- "✔ Ancaman diamankan"
+const scanResults=[
+ "AdService.apk terdeteksi",
+ "Tracker iklan aktif",
+ "Cache iklan 124MB",
+ "Popup script tersembunyi",
+ "Banner ads background",
+ "SDK iklan tidak dikenal",
+ "History redirect iklan",
+ "Service ads berjalan",
+ "Click fraud module",
+ "Hidden webview ads",
+ "Push ads listener",
+ "Adware system service",
+ "Temporary ads cache",
+ "Background ads task",
+ "Injected ads script",
+ "Ads database entry",
+ "Analytics tracker",
+ "Third-party ads API",
+ "Ads config file",
+ "Suspicious ads activity",
+ "Auto popup detected",
+ "Overlay ads permission",
+ "Floating ads service",
+ "Ads beacon found",
+ "Unknown ads payload"
 ];
 
+const log=document.getElementById("log");
 const scanBtn=document.getElementById("scanBtn");
 const cleanBtn=document.getElementById("cleanBtn");
-const scanBox=document.getElementById("scanBox");
-const log=document.getElementById("log");
-const status=document.getElementById("status");
-const cleaning=document.getElementById("cleaning");
-const percentText=document.getElementById("percent");
 const mainUI=document.getElementById("mainUI");
-const finalUI=document.getElementById("finalUI");
+const finalScreen=document.getElementById("finalScreen");
 
+let items=[];
+
+/* SCAN */
 scanBtn.onclick=()=>{
   scanBtn.disabled=true;
-  status.textContent="🔍 Memindai perangkat...";
-  scanBox.style.display="block";
   log.innerHTML="";
   let i=0;
-  const logInt=setInterval(()=>{
-    const div=document.createElement("div");
-    div.textContent=scanLogs[i];
-    log.appendChild(div);
+  const s=setInterval(()=>{
+    const d=document.createElement("div");
+    d.textContent="🔍 "+scanResults[i];
+    log.appendChild(d);
     log.scrollTop=log.scrollHeight;
+    items.push(d);
     i++;
-    if(i>=scanLogs.length){
-      clearInterval(logInt);
-      setTimeout(()=>{
-        scanBox.style.display="none";
-        status.textContent="✔ Siap dibersihkan";
-        cleanBtn.style.display="block";
-      },600);
+    if(i>=scanResults.length){
+      clearInterval(s);
+      scanBtn.style.display="none";
+      cleanBtn.style.display="block";
     }
-  },450);
+  },350);
 };
 
+/* CLEAN */
 cleanBtn.onclick=()=>{
   cleanBtn.disabled=true;
-  cleaning.style.display="block";
-  let p=0;
-  const int=setInterval(()=>{
-    p++;
-    percentText.textContent=p+"%";
-    if(p>=100){
-      clearInterval(int);
-      setTimeout(()=>{
-        mainUI.style.display="none";
-        finalUI.style.display="block";
-      },400);
+  let idx=0;
+  const c=setInterval(()=>{
+    if(idx<items.length){
+      items[idx].textContent="✔ Dihapus: "+scanResults[idx];
+      items[idx].classList.add("removed");
+      idx++;
+    }else{
+      clearInterval(c);
+      mainUI.style.display="none";
+      finalScreen.style.display="flex";
     }
-  },45);
+  },180);
 };
 </script>
 
